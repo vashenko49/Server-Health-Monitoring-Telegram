@@ -5,7 +5,7 @@ server:
   port: 9000
 spring:
   profiles:
-    active: dev
+    active: prod
 logging:
   level:
     org.springframework: ERROR

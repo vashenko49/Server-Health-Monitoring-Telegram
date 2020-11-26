@@ -24,3 +24,5 @@ spring:
   config:
     activate:
       on-profile: dev
+server:
+  check: http://localhost:9000/api/v1/health-check

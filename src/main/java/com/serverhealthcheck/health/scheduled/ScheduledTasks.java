@@ -1,6 +1,7 @@
 package com.serverhealthcheck.health.scheduled;
 
 import com.serverhealthcheck.health.bot.service.BotService;
+import com.serverhealthcheck.health.health.HealthChecker;
 import lombok.AllArgsConstructor;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -13,9 +14,12 @@ import org.springframework.stereotype.Component;
 public class ScheduledTasks {
 
     private final BotService botService;
+    private final HealthChecker healthChecker;
 
-    @Scheduled(fixedRate = 500)
+    @Scheduled(fixedRate = 1000)
     public void reportCurrentTime() {
-        botService.sendMessageToAllUser("Error");
+        if (!healthChecker.checkServer()) {
+            botService.sendMessageToAllUser("Warning! The server has been stopped!");
+        }
     }
 }

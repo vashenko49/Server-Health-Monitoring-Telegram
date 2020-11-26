@@ -1,5 +1,6 @@
 server:
   port: 81
+  check: ${CHECK_HEALTH_SERVER_URL:?SET_ENVIOMENT_CHECK_HEALTH_SERVER_URL_IN_SYSTEM}
 spring:
   profiles:
     active: prod
@@ -7,10 +8,10 @@ spring:
     mapper:
       DEFAULT_VIEW_INCLUSION: true
   datasource:
-    url: ${DATA_BASE_URL_BOT:?SET_ENVIOMENT_DATA_BASE_URL_IN_SYSTEM}
+    url: ${DATA_BASE_URL_BOT:?SET_ENVIOMENT_DATA_BASE_URL_BOT_IN_SYSTEM}
     driver-class-name: org.postgresql.Driver
     username: ${DATA_BASE_USERNAME:?SET_ENVIOMENT_DATA_BASE_USERNAME_URL_IN_SYSTEM}
     password: ${DATA_BASE_PASSWORD:?SET_ENVIOMENT_DATA_BASE_PASSWORD_URL_IN_SYSTEM}
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: 'create-drop'

@@ -1,8 +1,7 @@
 package com.serverhealthcheck.health.bot;
 
+import com.serverhealthcheck.health.bot.service.BotService;
 import com.serverhealthcheck.health.entity.UserTG;
-import com.serverhealthcheck.health.repository.UserRepository;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -22,7 +21,7 @@ public class Bot extends TelegramLongPollingBot {
     private String botToken;
 
     @Autowired
-    private UserRepository userRepository;
+    private BotService botService;
 
     @Override
     public String getBotUsername() {
@@ -40,14 +39,10 @@ public class Bot extends TelegramLongPollingBot {
 
             Message message = update.getMessage();
 
-            UserTG build = UserTG.builder()
-                    .chatId(message.getChatId())
-                    .name(message.getFrom().getUserName())
-                    .build();
+            UserTG userTG = botService.saveOrUpdate(message.getChatId(), message.getFrom().getUserName());
 
-            UserTG save = userRepository.save(build);
-            execute(new SendMessage().setChatId(save.getChatId())
-                    .setText("Hi! -> " + save.getName()));
+            execute(new SendMessage().setChatId(userTG.getChatId())
+                    .setText("Hi!" + userTG.getName()));
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
