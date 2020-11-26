@@ -1,0 +1,16 @@
+server:
+  port: 81
+spring:
+  profiles:
+    active: prod
+  jackson:
+    mapper:
+      DEFAULT_VIEW_INCLUSION: true
+  datasource:
+    url: ${DATA_BASE_URL_BOT:?SET_ENVIOMENT_DATA_BASE_URL_IN_SYSTEM}
+    driver-class-name: org.postgresql.Driver
+    username: ${DATA_BASE_USERNAME:?SET_ENVIOMENT_DATA_BASE_USERNAME_URL_IN_SYSTEM}
+    password: ${DATA_BASE_PASSWORD:?SET_ENVIOMENT_DATA_BASE_PASSWORD_URL_IN_SYSTEM}
+  jpa:
+    hibernate:
+      ddl-auto: create-drop

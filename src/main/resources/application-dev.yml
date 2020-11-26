@@ -1,0 +1,26 @@
+spring:
+  jackson:
+    mapper:
+      DEFAULT_VIEW_INCLUSION: true
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+  devtools:
+    restart:
+      enabled: true
+  h2:
+    console:
+      enabled: true
+      path: /console
+      settings:
+        trace: true
+        web-allow-others: true
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  config:
+    activate:
+      on-profile: dev

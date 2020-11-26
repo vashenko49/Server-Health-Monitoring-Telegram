@@ -1,0 +1,17 @@
+bot:
+  name: ${BOT_NAME:?SET_ENVIOMENT_DJWT_SECRET_IN_SYSTEM}
+  token: ${BOT_TOKEN:?SET_ENVIOMENT_DJWT_SECRET_IN_SYSTEM}
+server:
+  port: 9000
+spring:
+  profiles:
+    active: dev
+logging:
+  level:
+    org.springframework: ERROR
+    com.serverhealthcheck.health: warn
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
+    file: "%d %p %c{1.} [%t] %m%n"
+  file:
+    name: app.log
