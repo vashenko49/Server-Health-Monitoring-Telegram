@@ -16,7 +16,7 @@ public class ScheduledTasks {
     private final BotService botService;
     private final HealthChecker healthChecker;
 
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(cron = "0 0/5 * * * ?")
     public void reportCurrentTime() {
         if (!healthChecker.checkServer()) {
             botService.sendMessageToAllUser("Warning! The server has been stopped!");

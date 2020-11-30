@@ -14,4 +14,4 @@ spring:
     password: ${DATA_BASE_PASSWORD:?SET_ENVIOMENT_DATA_BASE_PASSWORD_URL_IN_SYSTEM}
   jpa:
     hibernate:
-      ddl-auto: 'create-drop'
+      ddl-auto: 'create'

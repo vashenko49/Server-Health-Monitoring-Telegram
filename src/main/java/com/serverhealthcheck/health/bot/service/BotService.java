@@ -2,7 +2,7 @@ package com.serverhealthcheck.health.bot.service;
 
 import com.serverhealthcheck.health.bot.Bot;
 import com.serverhealthcheck.health.entity.UserTG;
-import com.serverhealthcheck.health.repository.UserRepository;
+import com.serverhealthcheck.health.repository.UserTGRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -20,28 +19,28 @@ import java.util.Optional;
 @AllArgsConstructor
 public class BotService implements BotDefault {
     private final Bot bot;
-    private final UserRepository userRepository;
+    private final UserTGRepository userTGRepository;
 
     @Override
     public UserTG saveOrUpdate(Long chatId, String name) {
-        Optional<UserTG> byName = userRepository.findByName(name);
+        Optional<UserTG> byName = userTGRepository.findByName(name);
         if (byName.isEmpty()) {
             UserTG build = UserTG.builder()
                     .chatId(chatId)
                     .name(name)
                     .build();
-            return userRepository.save(build);
+            return userTGRepository.save(build);
         } else {
             UserTG userTG = byName.get();
             userTG.setChatId(chatId);
-            return userRepository.save(userTG);
+            return userTGRepository.save(userTG);
         }
     }
 
     @Override
     @Async
     public void sendMessageToAllUser(String message) {
-        userRepository.findAll().forEach(userTG -> {
+        userTGRepository.findAll().forEach(userTG -> {
             try {
                 bot.execute(new SendMessage().setChatId(userTG.getChatId()).setText(message));
             } catch (TelegramApiException e) {
